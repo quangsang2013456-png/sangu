@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rapid Copy & Delete</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 15px; max-width: 600px; margin: auto; background: #f9f9f9; }
+    textarea { width: 100%; height: 120px; padding: 10px; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; }
+    button { width: 100%; padding: 12px; margin: 10px 0; background: #007bff; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; }
+    button:hover { background: #0056b3; }
+    .line-btn { 
+      padding: 12px; margin: 6px 0; background: white; border: 1px solid #ddd; 
+      border-radius: 6px; cursor: pointer; font-size: 15px; word-break: break-word;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: background 0.1s;
+    }
+    .line-btn:active { background: #e2e2e2; }
+  </style>
+</head>
+<body>
+  <h3>Rapid Copy & Xóa Dòng</h3>
+  <textarea id="input" placeholder="Dán danh sách dài của bạn vào đây..."></textarea>
+  <button onclick="makeList()">TẠO DANH SÁCH BẤM COPY</button>
+  <div id="list"></div>
+
+  <script>
+    function makeList() {
+      const text = document.getElementById('input').value;
+      const lines = text.split('\n').filter(l => l.trim() !== '');
+      const container = document.getElementById('list');
+      container.innerHTML = '';
+      
+      lines.forEach(line => {
+        const btn = document.createElement('div');
+        btn.className = 'line-btn';
+        btn.innerText = line;
+        
+        // Chạm/Click là Copy + Xóa dòng ngay
+        btn.onclick = function() {
+          navigator.clipboard.writeText(line);
+          this.remove();
+        };
+        container.appendChild(btn);
+      });
+    }
+  </script>
+</body>
+</html>
